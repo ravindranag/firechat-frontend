@@ -4,6 +4,7 @@ import lightPalette from "./palette.light"
 import darkPalette from "./palette.dark"
 import { ThemeMode } from "@/types/theme"
 import { create } from "zustand"
+import componentOverrides from "./components"
 
 interface AppThemeStore {
 	getAppTheme: () => Theme,
@@ -22,7 +23,8 @@ const useAppThemeStore = create<AppThemeStore>((set, get) => ({
 	},
 	getAppTheme: () => createTheme({
 		typography: typographyOptions(get().themeMode),	
-		palette: get().themeMode === ThemeMode.LIGHT ? lightPalette : darkPalette
+		palette: get().themeMode === ThemeMode.LIGHT ? lightPalette : darkPalette,
+		components: componentOverrides
 	}),
 	setThemeMode: (t) => {
 		set({

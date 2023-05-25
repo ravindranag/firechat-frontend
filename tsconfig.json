@@ -25,7 +25,11 @@
 		"@/*": ["/*"],
 		"@/types/*": ["types/*"],
 		"@/theme/*": ["theme/*"],
-		"@/app/*": ["app/*"]
+		"@/app/*": ["app/*"],
+		"@/stores/*": ["stores/*"],
+		"@/components/*": ["components/*"],
+		"@/api/*": ["api/*"],
+		"@/socket/*": ["socket/*"]
 	}
   },
   "include": ["src"],
