@@ -8,7 +8,7 @@ import lightPalette from "./palette.light"
 const typographyOptions = (mode: ThemeMode): TypographyOptions => ({
 	fontFamily: ['Rubik', 'sans-serif'].join(','),
 	allVariants: {
-		color: mode === ThemeMode.DARK ? darkPalette.text?.primary : lightPalette.text?.primary
+		color: mode === ThemeMode.DARK ? darkPalette.onBackground?.default : lightPalette.onBackground?.default
 	}
 })
 

@@ -19,6 +19,9 @@ const baseAPI = {
 		signup: (data: UserSignUpLoginData) => API.post('/user', data),
 		login: (data: UserSignUpLoginData) => API.post('/user/login', data),
 		verify: () => AuthAPI.get('/user/verify')
+	},
+	publicRooms: {
+		fetch: () => AuthAPI.get('/room')
 	}
 }
 

@@ -23,6 +23,17 @@ const componentOverrides: Components = {
 				borderRadius: '8px'
 			}
 		}
+	},
+	MuiPaper: {
+		defaultProps: {
+			elevation: 0
+		}
+	}
+}
+
+declare module "@mui/material/Button" {
+	interface ButtonPropsColorOverrides {
+		secondaryContainer: true
 	}
 }
 

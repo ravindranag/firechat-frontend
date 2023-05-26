@@ -1,20 +1,50 @@
 import { PaletteOptions } from "@mui/material"
-import { grey } from "@mui/material/colors"
-// import grey from "@mui/material/colors/grey"
 
 const lightPalette: PaletteOptions = {
 	mode: 'light',
 	primary: {
-		main: grey[900]
+		main: '#785900'
+	},
+	onPrimary: {
+		main: '#ffffff'
+	},
+	primaryContainer: {
+		main: '#ffdf9e'
+	},
+	onPrimaryContainer: {
+		main: '#261a00'
+	},
+	secondary: {
+		main: '#6b5d3f'
+	},
+	onSecondary: {
+		main: '#ffffff'
+	},
+	secondaryContainer: {
+		main: '#f5e0bb'
+	},
+	onSecondaryContainer: {
+		main: '#241a04'
+	},
+	tertiary: {
+		main: '#4a6547'
+	},
+	onTertiary: {
+		main: '#ffffff'
+	},
+	tertiaryContainer: {
+		main: '#ccebc4'
+	},
+	onTertiaryContainer: {
+		main: '#072109'
 	},
 	background: {
-		default: grey[50],
-		paper: grey[300]
+		default: '#fffbff',
+		paper: '#fffbff',
 	},
-	text: {
-		primary: grey[900],
-		secondary: grey[700],
-		disabled: grey[500]
+	onBackground: {
+		default: '#1e1b16',
+		paper: '#1e1b16'
 	}
 }
 
