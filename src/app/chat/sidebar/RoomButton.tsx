@@ -1,4 +1,5 @@
 import useRoomStore from "@/stores/useRoomStore"
+import useSessionStore from "@/stores/useSessionStore"
 import { Room } from "@/types/room"
 import { Avatar, Button, Stack, Typography } from "@mui/material"
 import { MouseEventHandler } from "react"
@@ -9,8 +10,10 @@ type RoomButtonProps = {
 }
 
 const RoomButton = ({room, onClick}: RoomButtonProps) => {
+	const [decoded] = useSessionStore(state => [state.decoded])
 	const [currRoom] = useRoomStore(state => [state.room])
-	const isActive = currRoom?.id === room.id
+	const isActive = currRoom?.roomId === room.roomId
+	const friend = (room.room.users.filter(u => u.user.id !== decoded?.userId))[0]
 
 	return (
 		<Button 
@@ -28,10 +31,10 @@ const RoomButton = ({room, onClick}: RoomButtonProps) => {
 			color="secondary"
 		>
 			<Stack direction='row' gap='12px' width='100%'>
-				<Avatar src='broken' alt={room.name} />
+				<Avatar src={friend.user.avatar || 'broken'} alt={friend.user.name} />
 				<Typography
 					color={isActive ? 'onSecondary.main' : 'onBackground.default'}
-				>{room.name}</Typography>
+				>{friend.user.name}</Typography>
 			</Stack>
 		</Button>
 	)

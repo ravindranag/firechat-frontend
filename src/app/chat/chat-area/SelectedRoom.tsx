@@ -4,14 +4,20 @@ import { IconButton, Stack, Typography } from "@mui/material"
 import RoomAction from "./RoomAction"
 import RoomChatScrollView from "./RoomChatScrollView"
 import { useEffect } from "react"
-import roomSocket from "@/socket/room"
+import useSessionStore from "@/stores/useSessionStore"
 
 
 const RoomHeader = () => {
 	const [room, leaveRoom] = useRoomStore(state => [state.room, state.leaveRoom])
+	const [decoded] = useSessionStore(state => [state.decoded])
+
+	if(room === null) return <></>
+
+	const friend = (room.room.users.filter(u => u.user.id !== decoded?.userId))[0]
+
 	return (
 		<Stack direction='row' alignItems='center'>
-			<Typography flexGrow={1}>{room!.name}</Typography>
+			<Typography flexGrow={1}>{friend.user.name}</Typography>
 			<IconButton onClick={() => leaveRoom((success: any) => console.log('left room', success))}>
 				<Close />
 			</IconButton>

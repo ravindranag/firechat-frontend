@@ -9,19 +9,21 @@ export type RoomMessageProps = {
 
 const RoomChatScrollView = () => {
 	const scrollViewRef = useRef<HTMLDivElement>(null)
-	const [chats] = useRoomStore(state => [state.chats])
+	const [chats, fetchRecentChats] = useRoomStore(state => [state.chats, state.fetchRecentChats])
 
 	useEffect(() => {
-		if(scrollViewRef.current === null) return 
-		const ubSub = useRoomStore.subscribe(state => state.chats, () => {
-			console.log('chats changed')
-		})
+		console.log('fetch recent chats')
+		fetchRecentChats()
+		// if(scrollViewRef.current === null) return 
+		// const ubSub = useRoomStore.subscribe(state => state.chats, () => {
+		// 	console.log('chats changed')
+		// })
 
-		console.log(`Height: ${scrollViewRef.current?.offsetHeight}`)
-		console.log(scrollViewRef.current?.getBoundingClientRect())
-		scrollViewRef.current?.addEventListener('scroll', () => {
-			console.log(`Current scroll position: ${scrollViewRef.current?.scrollTop}`)
-		})
+		// console.log(`Height: ${scrollViewRef.current?.offsetHeight}`)
+		// console.log(scrollViewRef.current?.getBoundingClientRect())
+		// scrollViewRef.current?.addEventListener('scroll', () => {
+		// 	console.log(`Current scroll position: ${scrollViewRef.current?.scrollTop}`)
+		// })
 	}, [])
 
 	return (
@@ -39,16 +41,11 @@ const RoomChatScrollView = () => {
 			borderRadius='16px' 
 			ref={scrollViewRef}
 		>
-			<RoomMessage isSent={true} />
-			<RoomMessage isSent={false} />
-			<RoomMessage isSent={true} />
-			<RoomMessage isSent={false} />
-			<RoomMessage isSent={true} />
-			<RoomMessage isSent={false} />
-			<RoomMessage isSent={true} />
-			<RoomMessage isSent={false} />
-			<RoomMessage isSent={true} />
-			<RoomMessage isSent={false} />
+			{
+				chats.map(c => (
+					<RoomMessage isSent={true}/>
+				))
+			}
 			<Box 
 				sx={{
 					height: '1px',

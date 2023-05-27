@@ -3,6 +3,8 @@ import { create } from "zustand"
 type DecodedData = {
 	userId: string
 	name: string
+	username: string
+	avatar: string
 }
 
 interface SessionStore {

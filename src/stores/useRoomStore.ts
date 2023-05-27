@@ -1,3 +1,4 @@
+import baseAPI from "@/api/base";
 import roomSocket, { emitRoomEvent } from "@/socket/room";
 import { Chat, ChatStatus } from "@/types/chat";
 import { Room } from "@/types/room";
@@ -24,9 +25,19 @@ const useRoomStore = create(subscribeWithSelector<RoomStore>((set, get) => ({
 		set({room: r})
 	},
 	loading: true,
-	fetchRecentChats: () => {
+	fetchRecentChats: async () => {
 		set({chats: []})
-		set({loading: false})
+		try {
+			const chats = (await baseAPI.room.fetchRecentChats(get().room!.roomId)).data
+			console.log(chats)
+			set({chats: chats})
+		}
+		catch(err: any) {
+			console.log(err.response.data)
+		}
+		finally {
+			set({loading: false})
+		}
 	},
 	chats: [],
 	clearChats: () => set({chats: []}),
@@ -40,7 +51,7 @@ const useRoomStore = create(subscribeWithSelector<RoomStore>((set, get) => ({
 		let targetIdx = get().chats.length
 		get().appendToChat(c)
 		emitRoomEvent('room:send', {
-			roomId: get().room?.id,
+			roomId: get().room?.roomId,
 			chat: c
 		}, (chat: Chat) => {
 			console.log(chat)
@@ -53,10 +64,10 @@ const useRoomStore = create(subscribeWithSelector<RoomStore>((set, get) => ({
 		set({chats: ch})
 	},
 	joinRoom: (cb) => {
-		emitRoomEvent('room:join', get().room?.id, cb)
+		emitRoomEvent('room:join', get().room?.roomId, cb)
 	},
 	leaveRoom: (cb) => {
-		emitRoomEvent('room:leave', get().room?.id, cb)
+		emitRoomEvent('room:leave', get().room?.roomId, cb)
 		set({room: null})
 	}
 })))

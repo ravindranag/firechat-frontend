@@ -27,6 +27,11 @@ const componentOverrides: Components = {
 	MuiPaper: {
 		defaultProps: {
 			elevation: 0
+		},
+		styleOverrides: {
+			root: {
+				backgroundImage: 'none'
+			}
 		}
 	}
 }
@@ -34,6 +39,12 @@ const componentOverrides: Components = {
 declare module "@mui/material/Button" {
 	interface ButtonPropsColorOverrides {
 		secondaryContainer: true
+	}
+}
+
+declare module "@mui/material/CircularProgress" {
+	interface CircularProgressPropsColorOverrides {
+		onPrimary: true
 	}
 }
 

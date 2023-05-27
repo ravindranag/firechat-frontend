@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import AuthScreen from "./components/AuthScreen"
 import Dashboard from "../chat/Dashboard"
 import baseAPI from "@/api/base"
+import ConfirmationDialog from "../dialogs/common/ConfirmationDialog"
 
 const AppLoading = () => {
 	return (
@@ -33,7 +34,6 @@ const AppRoot = () => {
 			}
 			catch(err) {
 				console.log('Invalid token')
-				localStorage.removeItem('token')
 			}
 			finally {
 				setLoading(false)
@@ -53,6 +53,7 @@ const AppRoot = () => {
 				? <AuthScreen />
 				: <Dashboard />
 			}
+			<ConfirmationDialog />
 		</Stack>
 	)
 }
