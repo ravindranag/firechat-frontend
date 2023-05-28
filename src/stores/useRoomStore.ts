@@ -1,11 +1,9 @@
 import baseAPI from "@/api/base";
-import roomSocket, { emitRoomEvent } from "@/socket/room";
 import { Chat, ChatStatus } from "@/types/chat";
 import { Room } from "@/types/room";
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 import useSessionStore from "./useSessionStore";
-import useRoomScrollableViewStore from "./useRoomScrollableViewStore";
 import useSocketStore from "./useSocketStore";
 import { Ack } from "@/types/socket";
 

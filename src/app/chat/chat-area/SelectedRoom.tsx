@@ -26,7 +26,7 @@ const RoomHeader = () => {
 }
 
 const SelectedRoom = () => {
-	const [joinRoom, leaveRoom] = useRoomStore(state => [state.joinRoom, state.leaveRoom])
+	const [joinRoom] = useRoomStore(state => [state.joinRoom])
 
 	useEffect(() => {
 		joinRoom((success: string) => {

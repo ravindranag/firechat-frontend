@@ -1,4 +1,4 @@
-import { ACK_STATUS, Ack } from "@/types/socket";
+import { Ack } from "@/types/socket";
 import { io } from "socket.io-client";
 
 const roomSocket = io(import.meta.env.VITE_ROOM_SOCKET_URL, {
