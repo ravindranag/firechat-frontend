@@ -59,14 +59,14 @@ const useRoomStore = create(subscribeWithSelector<RoomStore>((set, get) => ({
 	clearChats: () => set({chats: []}),
 	updateChatStatus: (idx, chat, s) => {
 		chat.status = s
-		let cl = get().chats
+		const cl = get().chats
 		cl[idx] = chat
 		set({chats: cl})
 	},
 	senderId: undefined,
 	receiverId: undefined,
 	sendChatToRoom: async (m) => {
-		let targetIdx = get().chats.length
+		const targetIdx = get().chats.length
 		get().appendToChat({
 			message: m,
 			senderId: get().senderId!,
@@ -76,7 +76,7 @@ const useRoomStore = create(subscribeWithSelector<RoomStore>((set, get) => ({
 		try {
 			const res: Ack = await useSocketStore.getState().roomSocket?.emitWithAck('room:send', get().room?.roomId, get().receiverId, m)
 			if(res.status === 'OK') {
-				get().updateChatStatus(targetIdx, res.payload, ChatStatus.SENT)
+				get().updateChatStatus(targetIdx, res.payload as Chat, ChatStatus.SENT)
 			}
 		}
 		catch(err: any) {
@@ -84,7 +84,7 @@ const useRoomStore = create(subscribeWithSelector<RoomStore>((set, get) => ({
 		}
 	},
 	appendToChat: (c) => {
-		let ch = get().chats
+		const ch = get().chats
 		ch.push(c)
 		set({chats: ch})
 	},

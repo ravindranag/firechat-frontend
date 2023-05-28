@@ -1,6 +1,6 @@
 import useAppStore from "@/stores/useAppStore"
 import { Close, Search, SentimentDissatisfied } from "@mui/icons-material"
-import { CircularProgress, Dialog, IconButton, Stack, TextField, Typography, useMediaQuery, useTheme } from "@mui/material"
+import { CircularProgress, Dialog, IconButton, Stack, TextField, Theme, Typography, useMediaQuery } from "@mui/material"
 import PersonAction from "./PersonAction"
 import useSearchStore from "@/stores/useSearchStore"
 import { useRef, useState } from "react"
@@ -16,11 +16,12 @@ const EmptySearchResult = () => {
 
 const SearchAddFriend = () => {
 	const [showSearchDialog, setShowSearchDialog, fetchDataForDashboard] = useAppStore(state => [state.showSearchDialog, state.setShowSearchDialog, state.fetchDataForDashboard])
-	const theme = useTheme()
 	const [loading, results, search, sendFriendRequestToUser] = useSearchStore(state => [state.loading, state.results, state.search, state.sendFriendRequestToUser])
 	const searchBoxRef = useRef<HTMLInputElement>(null)
 	const [hasSearchedOnce, setHasSearchedOnce] = useState<boolean>(false)
 	const [friendListNeedsToUpdate, setFriendListNeedsToUpdate] = useState<boolean>(false)
+
+	const isMobileDevice = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
 	const handleClose = () => {
 		if(friendListNeedsToUpdate) fetchDataForDashboard()
@@ -32,16 +33,16 @@ const SearchAddFriend = () => {
 			open={showSearchDialog} 
 			onClose={handleClose}
 			PaperProps={{
-				sx: (theme) => ({
+				sx: {
 					width: '100%',
-					maxWidth: useMediaQuery(theme.breakpoints.down('md')) ? '100%' : 600,
+					maxWidth: isMobileDevice ? '100%' : 600,
 					margin: 0,
-					borderRadius: useMediaQuery(theme.breakpoints.down('md')) ? 0 : '16px',
+					borderRadius: isMobileDevice ? 0 : '16px',
 					bgcolor: 'background.default',
-					height: useMediaQuery(theme.breakpoints.down('md')) ? '100%' : 'calc(100vh - 32px)',
-				})
+					height: isMobileDevice ? '100%' : 'calc(100vh - 32px)',
+				}
 			}}
-			fullScreen={useMediaQuery(theme.breakpoints.down('md'))}
+			fullScreen={isMobileDevice}
 			sx={{
 				'& .MuiDialog-container': {
 					backdropFilter: 'blur(2px)'

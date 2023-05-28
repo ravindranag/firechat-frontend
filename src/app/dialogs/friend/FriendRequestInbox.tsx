@@ -20,6 +20,7 @@ const FriendRequestInbox = () => {
 	])
 
 	const handleClose = () => setShowFriendRequestInbox(false)
+	const isMobileDevice = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
 	return (
 		<Dialog
@@ -27,16 +28,16 @@ const FriendRequestInbox = () => {
 			onClose={handleClose}
 			keepMounted={true}
 			PaperProps={{
-				sx: (theme) => ({
+				sx: {
 					width: '100%',
-					maxWidth: useMediaQuery(theme.breakpoints.down('md')) ? '100%' : 600,
+					maxWidth: isMobileDevice ? '100%' : 600,
 					margin: 0,
-					borderRadius: useMediaQuery(theme.breakpoints.down('md')) ? 0 : '16px',
+					borderRadius: isMobileDevice ? 0 : '16px',
 					bgcolor: 'background.default',
-					height: useMediaQuery(theme.breakpoints.down('md')) ? '100%' : 'calc(100vh - 32px)',
-				})
+					height: isMobileDevice ? '100%' : 'calc(100vh - 32px)',
+				}
 			}}
-			fullScreen={useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))}
+			fullScreen={isMobileDevice}
 			sx={{
 				'& .MuiDialog-container': {
 					backdropFilter: 'blur(2px)'

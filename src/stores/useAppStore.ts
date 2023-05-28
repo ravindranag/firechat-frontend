@@ -35,7 +35,7 @@ const useAppStore = create<AppStore>((set, get) => ({
 		return get().rooms.filter(room => room.room.users.filter(user => user.user.id === friendId).length > 0)[0]
 	},
 	removeRoomFromList: async (roomId) => {
-		let rl = get().rooms.filter(room => room.roomId !== roomId)
+		const rl = get().rooms.filter(room => room.roomId !== roomId)
 		set({rooms: rl})
 	},
 	loading: true,
@@ -52,7 +52,7 @@ const useAppStore = create<AppStore>((set, get) => ({
 	setFriends: (f) => set({friends: f}),
 	setFriendRequests: (f) => set({friendRequests: f}),
 	removeFriendRequestFromList: (idx: number) => {
-		let frs = get().friendRequests
+		const frs = get().friendRequests
 		frs.splice(idx, 1)
 		set({friendRequests: frs})
 	},
@@ -61,7 +61,7 @@ const useAppStore = create<AppStore>((set, get) => ({
 		baseAPI.friend.delete(userId, friendId)
 			.then(() => {
 				get().removeRoomFromList(roomIdToRemove.roomId)
-				let fl = get().friends.filter(f => f.friendId !== friendId)
+				const fl = get().friends.filter(f => f.friendId !== friendId)
 				set({friends: fl})
 			})
 			.catch((err: any) => {
@@ -69,7 +69,7 @@ const useAppStore = create<AppStore>((set, get) => ({
 			})
 	},
 	removeFriendFromListOffline: (idx) => {
-		let fl = get().friends
+		const fl = get().friends
 		fl.splice(idx, 1)
 		set({friends: fl})
 	},

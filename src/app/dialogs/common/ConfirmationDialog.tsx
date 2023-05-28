@@ -1,22 +1,24 @@
 import useConfirmationStore from "@/stores/useConfirmationStore"
-import { Button, Dialog, Stack, useMediaQuery } from "@mui/material"
+import { Button, Dialog, Stack, Theme, useMediaQuery } from "@mui/material"
 
 const ConfirmationDialog = () => {
 	const [title, onConfirm, hideConfirmationDialog] = useConfirmationStore(state => [state.title, state.onConfirm, state.hideConfirmationDialog])
 	const shouldShowDialog = title !== null && onConfirm !== null
+
+	const isMobileDevice = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
 	return (
 		<Dialog
 			open={shouldShowDialog}
 			onClose={hideConfirmationDialog}
 			PaperProps={{
-				sx: (theme) => ({
+				sx: {
 					width: '100%',
-					maxWidth: useMediaQuery(theme.breakpoints.down('md')) ? '100%' : 600,
+					maxWidth: isMobileDevice ? '100%' : 600,
 					margin: '16px',
 					borderRadius: '16px',
 					bgcolor: 'background.default'
-				})
+				}
 			}}
 			sx={{
 				'& .MuiDialog-container': {

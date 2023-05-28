@@ -30,7 +30,8 @@
 		"@/components/*": ["components/*"],
 		"@/api/*": ["api/*"],
 		"@/socket/*": ["socket/*"]
-	}
+	},
+	"noImplicitAny": false
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

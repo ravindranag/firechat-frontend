@@ -1,14 +1,14 @@
 import useAppStore from "@/stores/useAppStore"
 import useSessionStore from "@/stores/useSessionStore"
 import { Close } from "@mui/icons-material"
-import { Avatar, Button, Dialog, IconButton, Stack, TextField, Typography, useMediaQuery, useTheme } from "@mui/material"
+import { Avatar, Button, Dialog, IconButton, Stack, TextField, Theme, Typography, useMediaQuery } from "@mui/material"
 
 const ProfileDashboard = () => {
 	const [showProfileDashboard, setShowProfileDashboard] = useAppStore(state => [state.showProfileDashboard, state.setShowProfileDashboard])
 	const [decoded] = useSessionStore(state => [state.decoded])
-	const theme = useTheme()
 
 	const handleClose = () => setShowProfileDashboard(false)
+	const isMobileDevice = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
 
 	if(decoded === null) return <></>
 
@@ -18,16 +18,16 @@ const ProfileDashboard = () => {
 			onClose={handleClose}
 			keepMounted={true}
 			PaperProps={{
-				sx: (theme) => ({
+				sx: {
 					width: '100%',
-					maxWidth: useMediaQuery(theme.breakpoints.down('md')) ? '100%' : 600,
+					maxWidth: isMobileDevice ? '100%' : 600,
 					margin: 0,
-					borderRadius: useMediaQuery(theme.breakpoints.down('md')) ? 0 : '16px',
+					borderRadius: isMobileDevice ? 0 : '16px',
 					bgcolor: 'background.default',
-					height: useMediaQuery(theme.breakpoints.down('md')) ? '100%' : 'calc(100vh - 32px)',
-				})
+					height: isMobileDevice ? '100%' : 'calc(100vh - 32px)',
+				}
 			}}
-			fullScreen={useMediaQuery(theme.breakpoints.down('md'))}
+			fullScreen={isMobileDevice}
 			sx={{
 				'& .MuiDialog-container': {
 					backdropFilter: 'blur(2px)'

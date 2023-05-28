@@ -28,7 +28,7 @@ const useSearchStore = create<SearchStore>((set, get) => ({
 		}
 	},
 	removeUserFromSearchResults: (userId) => {
-		let r = get().results.filter(user => user.id !== userId)
+		const r = get().results.filter(user => user.id !== userId)
 		set({results: r})
 	},
 	sendFriendRequestToUser: async (friendId) => {

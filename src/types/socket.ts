@@ -5,5 +5,5 @@ export const ACK_STATUS = {
 
 export type Ack = {
 	status: string,
-	payload: any
+	payload: unknown
 }
