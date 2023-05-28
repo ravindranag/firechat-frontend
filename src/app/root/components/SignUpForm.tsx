@@ -10,7 +10,8 @@ import { useState } from "react"
 const validationSchema = Yup.object({
 	name: Yup.string().required(),
 	email: Yup.string().email().required(),
-	password: Yup.string().required().min(6)
+	password: Yup.string().required().min(6),
+	username: Yup.string().required().min(3)
 })
 
 const SignUpForm = ({toggleAuthType}: AuthFormProps) => {
@@ -21,7 +22,8 @@ const SignUpForm = ({toggleAuthType}: AuthFormProps) => {
 		initialValues: {
 			name: '',
 			email: '',
-			password: ''
+			password: '',
+			username: ''
 		},
 		onSubmit: async (values) => {
 			setIsLoading(true)
@@ -51,6 +53,15 @@ const SignUpForm = ({toggleAuthType}: AuthFormProps) => {
 					onBlur={formik.handleBlur}
 					error={(formik.touched.name && formik.errors.name) ? true : false}
 					helperText={formik.errors.name}
+				/>
+				<TextField 
+					name='username'
+					label='Username'
+					value={formik.values.username}
+					onChange={formik.handleChange}
+					onBlur={formik.handleBlur}
+					error={(formik.touched.username && formik.errors.username) ? true : false}
+					helperText={formik.errors.username}
 				/>
 				<TextField 
 					name='email'
