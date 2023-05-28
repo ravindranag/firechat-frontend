@@ -3,7 +3,10 @@ import { io } from "socket.io-client";
 
 const roomSocket = io(import.meta.env.VITE_ROOM_SOCKET_URL, {
 	autoConnect: false,
-	path: '/room/'
+	path: '/room/',
+	auth: {
+		userId: `${localStorage.getItem('token')}`
+	}
 })
 
 export default roomSocket

@@ -1,18 +1,28 @@
-import { Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { RoomMessageProps } from "./RoomChatScrollView";
+import { Chat, ChatStatus } from "@/types/chat";
+import { AccessTime, Check } from "@mui/icons-material";
+import { Stack, Theme, Typography, useMediaQuery } from "@mui/material";
 
-const RoomMessage = ({ isSent }: RoomMessageProps) => {
-	const theme = useTheme();
-	const isMobileDevice = useMediaQuery(theme.breakpoints.down('md'));
+type RoomMessageProps = {
+	isSent: boolean
+	chat: Chat
+}
+
+const RoomMessage = ({ isSent, chat }: RoomMessageProps) => {
+	const isMobileDevice = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 	return (
 		<Stack alignItems={isSent ? 'end' : 'start'} width='100%'>
-			<Stack maxWidth={isMobileDevice ? 250 : 350} width='100%' padding='8px' borderRadius='8px' bgcolor={isSent ? 'tertiaryContainer.main' : 'secondaryContainer.main'}>
+			<Stack direction='row' alignItems='end' gap='8px' maxWidth={isMobileDevice ? 250 : 350} width='fit-content' padding='8px' borderRadius='8px' bgcolor={isSent ? 'tertiaryContainer.main' : 'secondaryContainer.main'}>
 				<Typography
 					component='pre'
 					color={isSent ? 'onTertiaryContainer.main' : 'onSecondaryContainer.main'}
 				>
-					{'asd\njhsadjh\njahd'}
+					{chat.message.toString()}
 				</Typography>
+				{ isSent && 
+					(chat.status === ChatStatus.PENDING 
+						? <AccessTime color={isSent ? 'onTertiaryContainer' : 'onSecondaryContainer'} fontSize="small" /> 
+						: <Check color={isSent ? 'onTertiaryContainer' : 'onSecondaryContainer'} fontSize="small" /> )
+				}
 			</Stack>
 		</Stack>
 	)

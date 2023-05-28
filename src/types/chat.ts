@@ -7,7 +7,7 @@ export enum ChatStatus {
 
 export type Chat = {
 	id?: string
-	content: string
+	message: string
 	sender?: User
 	receiver?: User
 	senderId: string

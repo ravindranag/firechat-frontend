@@ -15,12 +15,17 @@ const EmptySearchResult = () => {
 }
 
 const SearchAddFriend = () => {
-	const [showSearchDialog, setShowSearchDialog] = useAppStore(state => [state.showSearchDialog, state.setShowSearchDialog])
+	const [showSearchDialog, setShowSearchDialog, fetchDataForDashboard] = useAppStore(state => [state.showSearchDialog, state.setShowSearchDialog, state.fetchDataForDashboard])
 	const theme = useTheme()
-	const handleClose = () => setShowSearchDialog(false)
 	const [loading, results, search, sendFriendRequestToUser] = useSearchStore(state => [state.loading, state.results, state.search, state.sendFriendRequestToUser])
 	const searchBoxRef = useRef<HTMLInputElement>(null)
 	const [hasSearchedOnce, setHasSearchedOnce] = useState<boolean>(false)
+	const [friendListNeedsToUpdate, setFriendListNeedsToUpdate] = useState<boolean>(false)
+
+	const handleClose = () => {
+		if(friendListNeedsToUpdate) fetchDataForDashboard()
+		setShowSearchDialog(false)
+	}
 
 	return (
 		<Dialog 
@@ -96,6 +101,7 @@ const SearchAddFriend = () => {
 								user={user}
 								onClick={() => {
 									sendFriendRequestToUser(user.id!)
+									setFriendListNeedsToUpdate(true)
 								}}
 							/>
 						))

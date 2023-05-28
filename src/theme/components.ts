@@ -48,4 +48,11 @@ declare module "@mui/material/CircularProgress" {
 	}
 }
 
+declare module "@mui/material/SvgIcon" {
+	interface SvgIconPropsColorOverrides {
+		onTertiaryContainer: true
+		onSecondaryContainer: true
+	}
+}
+
 export default componentOverrides

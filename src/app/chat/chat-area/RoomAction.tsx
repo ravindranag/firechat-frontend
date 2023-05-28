@@ -1,9 +1,7 @@
 import useRoomStore from "@/stores/useRoomStore"
-import useSessionStore from "@/stores/useSessionStore"
-import { ChatStatus } from "@/types/chat"
 import { Send } from "@mui/icons-material"
 import { Box, IconButton, Stack } from "@mui/material"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 
 
 declare module '@mui/material/IconButton' {
@@ -13,28 +11,32 @@ declare module '@mui/material/IconButton' {
 }
 
 const RoomAction = () => {
-	const messsageRef = useRef<HTMLDivElement>(null)
+	const messageRef = useRef<HTMLDivElement>(null)
 	const [sendChatToRoom] = useRoomStore(state => [state.sendChatToRoom])
-	const [decoded] = useSessionStore(state => [state.decoded])
+
+	useEffect(() => {
+		messageRef.current?.focus()
+	}, [])
 
 	const handleSend = () => {
-		const message = messsageRef.current?.textContent
-		if(!message) return 
-		console.log(message)
-		sendChatToRoom({
-			content: message,
-			receiverId: 'rv-2',
-			senderId: decoded!.userId,
-			status: ChatStatus.PENDING
-		})
+		if(messageRef.current) {
+			const message = messageRef.current.textContent!.toString()
+			if(message.length > 0) {
+				sendChatToRoom(message)
+				messageRef.current.textContent = ''
+				messageRef.current.focus()
+			}
+		}
 	}
 
 	return (
 		<Stack direction='row' gap='12px' alignItems='end'>
 			<Box 
-				ref={messsageRef}
+				ref={messageRef}
 				contentEditable={true}
+				placeholder='Message'
 				sx={{
+					position: 'relative',
 					width: '100%',
 					padding: '14px 16px',
 					border: '1px solid',
@@ -46,7 +48,7 @@ const RoomAction = () => {
 						outline: 'none'
 					},
 					bgcolor: 'primaryContainer.main',
-					color: 'onPrimaryContainer.main'
+					color: 'onPrimaryContainer.main',
 				}}
 			/>
 			<IconButton

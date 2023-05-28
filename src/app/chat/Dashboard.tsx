@@ -5,13 +5,21 @@ import { useEffect } from "react"
 import roomSocket from "@/socket/room"
 import ProfileDashboard from "../dialogs/profile/ProfileDashboard"
 import useAppStore from "@/stores/useAppStore"
+import useSocketStore from "@/stores/useSocketStore"
+import useSessionStore from "@/stores/useSessionStore"
 
 const Dashboard = () => {
 	const [fetchDataForDashboard] = useAppStore(state => [state.fetchDataForDashboard])
+	const [decoded] = useSessionStore(state => [state.decoded])
+	const [connectToRoomSocket, disconnectRoomSocket] = useSocketStore(state => [state.connectToRoomSocket, state.disconnectRoomSocket])
 
 	useEffect(() => {
-		roomSocket.connect()
+		connectToRoomSocket(decoded!.userId)
 		fetchDataForDashboard()
+
+		return () => {
+			disconnectRoomSocket()
+		}
 	}, [])
 
 	return (
